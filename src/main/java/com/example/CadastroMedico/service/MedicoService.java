@@ -21,4 +21,8 @@ public class MedicoService {
         Optional<Medico> obj = repository.findById(id);
         return obj.get();
     }
+
+    public Medico insert(Medico obj) {
+        return repository.save(obj);
+    }
 }
