@@ -2,8 +2,11 @@ package com.example.CadastroMedico.service;
 
 import com.example.CadastroMedico.entity.Medico;
 import com.example.CadastroMedico.repository.MedicoRepository;
+import com.example.CadastroMedico.service.exceptions.DatabaseException;
 import com.example.CadastroMedico.service.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +31,15 @@ public class MedicoService {
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public Medico update(Long id, Medico obj) {
