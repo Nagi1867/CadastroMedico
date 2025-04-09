@@ -29,4 +29,17 @@ public class MedicoService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    public Medico update(Long id, Medico obj) {
+        Medico entity = repository.getReferenceById(id);
+        updateData(entity, obj);
+        return repository.save(entity);
+    }
+
+    private void updateData(Medico entity, Medico obj) {
+        entity.setNome(obj.getNome());
+        entity.setCadastro(obj.getCadastro());
+        entity.setTelefone(obj.getTelefone());
+        entity.setStatus(obj.getStatus());
+    }
 }
