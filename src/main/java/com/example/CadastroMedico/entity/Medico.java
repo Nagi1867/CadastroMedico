@@ -1,5 +1,6 @@
 package com.example.CadastroMedico.entity;
 
+import com.example.CadastroMedico.enums.Status;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -18,12 +19,12 @@ public class Medico implements Serializable {
 
     public Medico() {}
 
-    public Medico(Long id, String nome, String cadastro, String telefone, Integer status) {
+    public Medico(Long id, String nome, String cadastro, String telefone, Status status) {
         this.id = id;
         this.nome = nome;
         this.cadastro = cadastro;
         this.telefone = telefone;
-        this.status = status;
+        setStatus(status);
     }
 
     public Long getId() {
@@ -58,12 +59,14 @@ public class Medico implements Serializable {
         this.telefone = telefone;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Status getStatus() {
+        return Status.valueOf(status);
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setStatus(Status status) {
+        if(status != null) {
+            this.status = status.getCode();
+        }
     }
 
     @Override
