@@ -25,4 +25,8 @@ public class MedicoService {
     public Medico insert(Medico obj) {
         return repository.save(obj);
     }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 }
